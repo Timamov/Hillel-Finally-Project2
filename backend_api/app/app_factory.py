@@ -1,7 +1,4 @@
 
-from fastapi import FastAPI
-# fc
-
 from applications.users.router import router_users
 from fastapi import FastAPI
 
