@@ -1,5 +1,5 @@
 DC = docker compose
-.PHONY: up down bash check
+.PHONY: up, down, bash, check,
 up:
 	${DC} up
 down:
