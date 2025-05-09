@@ -10,7 +10,3 @@ bash:
 	docker compose exec -it backend_api bash
 
 
-check:
-	isort .
-	black .
-	flake8 .
