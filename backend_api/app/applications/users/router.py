@@ -15,6 +15,6 @@ async def create_user(email, name, password, session: AsyncSession):
 
 
 @router_users.post("/create", status_code=status.HTTP_201_CREATED)
-async def create_user(new_user: RegisterUserFields, session: AsyncSession = Depends(get_async_session)) -> BaseFields:
+async def create_user_table(new_user: RegisterUserFields, session: AsyncSession = Depends(get_async_session)) -> BaseFields:
     print(session)
     return new_user
