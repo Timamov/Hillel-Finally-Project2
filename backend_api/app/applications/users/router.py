@@ -6,6 +6,7 @@ from applications.database.session_dependencies import get_async_session
 from applications.users.models import User
 from applications.users.schemas import BaseFields, RegisterUserFields
 
+
 router_users = APIRouter()
 
 
