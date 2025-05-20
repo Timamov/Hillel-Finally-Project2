@@ -1,5 +1,6 @@
 import datetime
 
+import jwt
 from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -32,5 +33,11 @@ class AuthHandler:
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail='Incorrect password'
             )
+    async def create_token(self, payload: dict, expiry: datetime.timedelta) -> str:
+        now = datetime.now()
+        time_payload = {"exp": now + expiry, "iat": now}
+        token = jwt.encode(payload | time_payload, self.secret, self.algorithm)
+        print(token)
+        return token
 
 auth_handler = AuthHandler()
