@@ -1,5 +1,5 @@
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 
 from applications.auth.password_handler import PasswordEncrypt
 from applications.users.models import User
@@ -11,9 +11,9 @@ async def create_user_in_db(email, name, password, session: AsyncSession):
     session.add(new_user)
     await session.commit()
 
+
 async def get_user_by_email(email, session: AsyncSession) -> User | None:
     query = select(User).filter(User.email == email)
     result = await session.execute(query)
     return result.scalar_one_or_none()
-
 
