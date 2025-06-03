@@ -7,6 +7,7 @@ from applications.auth.auth_handler import auth_handler
 from applications.auth.security import get_current_user
 from applications.database.session_dependencies import get_async_session
 from applications.users.models import User
+from applications.users.schemas import BaseUserInfo
 
 router_auth = APIRouter()
 
@@ -22,5 +23,7 @@ async def user_login(
 
 
 @router_auth.get("/get-my-info")
-async def get_my_info(user: User = Depends(get_current_user)):
-    pass
+async def get_my_info(
+    user: User = Depends(get_current_user)
+) -> BaseUserInfo:
+    return user
