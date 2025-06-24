@@ -39,6 +39,6 @@ async def get_current_user_with_token(request: Request) -> dict:
     access_token = request.cookies.get('access_token')
     if not access_token:
         return {}
-    user = await get_user_info(access_token)
+    user = await get_user_info(access_token)#
     user['access_token'] = access_token
     return user
