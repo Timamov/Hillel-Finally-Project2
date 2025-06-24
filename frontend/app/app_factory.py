@@ -8,5 +8,5 @@ from settings import settings
 def get_application() -> FastAPI:
     app = FastAPI(root_path_in_servers=True, debug=settings.DEBUG)
     app.include_router(router)
-    app.mount('/static', StaticFiles(directory='/static'), name='static')
+    app.mount('/static', StaticFiles(directory='static'), name='static')
     return app

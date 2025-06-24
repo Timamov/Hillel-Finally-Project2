@@ -1,6 +1,7 @@
 import aioboto3
 from fastapi import APIRouter, Body, UploadFile
 
+from applications.settings import settings
 ACCESS_KEY = 'ba88124bb9f211337bbc6c103330c249'
 SECRET_KEY = '863ba92413967d939d8cd1296b9010d62099712bb76c44fde5ffcea771822180'
 BUCKET_NAME = 'group25022025'
@@ -27,8 +28,8 @@ class  S3Storage:
         async for s3_client in self.get_s3_session():
             path = f'products/{product_uuid}/{file.filename}'
             await s3_client.upload_fileobj(file, self.bucket_name, path)
-            url = f"{PUBLIC_URL}/{path}"
-        return url
+            url = f"{settings.PUBLIC_URL}/{path}"
+            return url
 
 
 s3_storage = S3Storage()
