@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from applications.products.router import products_router
 from applications.settings import settings
 from applications.users.router import router_users
 from applications.auth.router import router_auth
@@ -17,4 +18,5 @@ def get_application() -> FastAPI:
 
     app.include_router(router_users, prefix="/users", tags=["Users"])
     app.include_router(router_auth, prefix="/auth", tags=["Auth"])
+    app.include_router(products_router, prefix='/products', tags=["Products"])
     return app
