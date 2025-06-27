@@ -8,8 +8,8 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory='templates')
 
-
 @router.get('/')
+@router.post('/')
 async def index(request: Request, user: dict = Depends(get_current_user_with_token)):
     products = await get_products()
     context = {
