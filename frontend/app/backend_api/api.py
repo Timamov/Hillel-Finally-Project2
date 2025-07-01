@@ -42,6 +42,14 @@ async def get_current_user_with_token(request: Request) -> dict:
     user['access_token'] = access_token
     return user
 
+async def get_product(pk: int):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            url=f'{settings.BACKEND_API}products/{pk}',
+        )
+        return response.json()
+
+
 
 async def get_products(q: str = ""):
     async with httpx.AsyncClient() as client:

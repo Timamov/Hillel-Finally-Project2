@@ -34,10 +34,10 @@ async def create_product_in_db(product_uuid, title, description, price, main_ima
 
 async def get_products_data(params: SearchParamsSchema, session: AsyncSession):
     query = select(Product)
-    count_query = select(func.count()).select_from(Product)
+    count_query = select(func.count()).select_from(Product) # count products: SELECT COUNT (*) PRODUCTS
 
-    order_direction = asc if params.order_direction == SortEnum.ASC else desc
-    if params.q:
+    order_direction = asc if params.order_direction == SortEnum.ASC else desc # ascending order direction for search if in schemas.py SortEnum = asc, else - descending
+    if params.q: # q - field for product search
         search_fields = [Product.title, Product.description]
         if params.use_sharp_q_filter:
             cleaned_query = params.q.strip().lower()
@@ -68,3 +68,8 @@ async def get_products_data(params: SearchParamsSchema, session: AsyncSession):
         'limit': params.limit,
         'pages': math.ceil(total / params.limit)
     }
+
+async def get_product_by_pk(pk: int, session: AsyncSession) -> Product | None:
+    query = select(Product).filter(Product.id == pk)
+    result = await session.execute(query)
+    return result.scalar_one_or_none()

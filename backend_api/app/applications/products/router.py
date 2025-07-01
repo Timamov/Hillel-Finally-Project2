@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Body, UploadFile, Depends
+from fastapi import APIRouter, Body, UploadFile, Depends, HTTPException, status
 import uuid
 
-from applications.products.crud import create_product_in_db
+from applications.products.crud import create_product_in_db, get_product_by_pk
 from services.s3.s3 import s3_storage
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -55,12 +55,15 @@ async def create_product(
     return
 
 
-@products_router.get('/{pk}')
-async def get_product(pk: int):
-    return
 
-
-@products_router.get('/')
+@products_router.get('/new_buildings')
 async def get_products(params: Annotated[SearchParamsSchema, Depends()], session: AsyncSession = Depends(get_async_session)):
     result = await get_products_data(params, session)
     return result
+
+@products_router.get('/{pk}')
+async def get_product(pk: int, session: AsyncSession = Depends(get_async_session),) -> ProductSchema:
+    product = await get_product_by_pk(pk, session)
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Product with pk #{pk} not found")
+    return product
