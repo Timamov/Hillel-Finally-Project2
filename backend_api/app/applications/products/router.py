@@ -56,7 +56,7 @@ async def create_product(
 
 
 
-@products_router.get('/')
+@products_router.get('/new_buildings')
 async def get_products(params: Annotated[SearchParamsSchema, Depends()], session: AsyncSession = Depends(get_async_session)):
     result = await get_products_data(params, session)
     return result
